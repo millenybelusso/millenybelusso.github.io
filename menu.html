@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Bryan’s Café</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        
+        <div class="logo-container">
+            <img src="img/logo.jpg" alt="Bryan's Café Logo" class="logo">
+        </div>
+        <nav>
+            <a href="index.html">About</a>
+            <a href="Menu.html">Menu</a>
+            <a href="Contact.html">Contact</a>
+        </nav>
+    </header>
+    <section>
+        <h2>Our Menu</h2>
+        <div id="menu-container">
+            <!-- JavaScript will insert menu items here -->
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2024 Bryan’s Café</p>
+    </footer>
+
+    <script>
+        function loadMenu() {
+            fetch('menu.xml')
+                .then(response => response.text())
+                .then(xmlText => {
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+                    const menuContainer = document.getElementById('menu-container');
+
+                    // Generate Meals
+                    let mealsHTML = '<h3>Meals</h3><div class="menu-section">';
+                    Array.from(xmlDoc.querySelectorAll('meals > item')).forEach(item => {
+                        const name = item.querySelector('name').textContent;
+                        const price = item.querySelector('price').textContent;
+                        const description = item.querySelector('description').textContent;
+                        const image = item.querySelector('image').textContent;
+                        mealsHTML += `
+                            <div class="menu-item">
+                                <img src="img/${image}" alt="${name}" class="menu-image">
+                                <strong>${name}</strong><br>
+                                <span>${price}</span>
+                                <p>${description}</p>
+                            </div>
+                        `;
+                    });
+                    mealsHTML += '</div>';
+
+                    // Generate Beverages
+                    let beveragesHTML = '<h3>Beverages</h3><div class="menu-section">';
+                    Array.from(xmlDoc.querySelectorAll('beverages > item:not(:nth-child(n+4))')).forEach(item => {
+                        const name = item.querySelector('name').textContent;
+                        const price = item.querySelector('price').textContent;
+                        const description = item.querySelector('description').textContent;
+                        const image = item.querySelector('image').textContent;
+                        beveragesHTML += `
+                            <div class="menu-item">
+                                <img src="img/${image}" alt="${name}" class="menu-image">
+                                <strong>${name}</strong><br>
+                                <span>${price}</span>
+                                <p>${description}</p>
+                            </div>
+                        `;
+                    });
+                    beveragesHTML += '</div>';
+
+                    // Generate Other Beverages
+                    let otherBeveragesHTML = '<h3>Other Beverages</h3><div class="menu-section">';
+                    Array.from(xmlDoc.querySelectorAll('beverages > item:nth-child(n+4)')).forEach(item => {
+                        const name = item.querySelector('name').textContent;
+                        const price = item.querySelector('price').textContent;
+                        const description = item.querySelector('description').textContent;
+                        const image = item.querySelector('image').textContent;
+                        otherBeveragesHTML += `
+                            <div class="menu-item">
+                                <img src="img/${image}" alt="${name}" class="menu-image">
+                                <strong>${name}</strong><br>
+                                <span>${price}</span>
+                                <p>${description}</p>
+                            </div>
+                        `;
+                    });
+                    otherBeveragesHTML += '</div>';
+
+                    // Append sections to container
+                    menuContainer.innerHTML = mealsHTML + beveragesHTML + otherBeveragesHTML;
+                })
+                .catch(error => console.error('Error loading XML:', error));
+        }
+
+        window.onload = loadMenu;
+    </script>
+</body>
+</html>

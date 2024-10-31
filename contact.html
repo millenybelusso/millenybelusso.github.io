@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Bryan’s Café</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="img/logo.jpg" alt="Bryan's Café Logo" class="logo">
+        </div>
+        <nav>
+            <a href="index.html">About</a>
+            <a href="Menu.html">Menu</a>
+            <a href="Contact.html">Contact</a>
+        </nav>
+    </header>
+    <section>
+        <h2>Contact Us</h2>
+        <form>
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName">
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+            <label for="message">Message:</label>
+            <textarea id="message" name="message"></textarea>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="branches-container"></div>
+    </section>
+    <footer>
+        <p>&copy; 2024 Bryan’s Café</p>
+    </footer>
+
+    <script>
+        function loadBranches() {
+            fetch('branches.xml')
+                .then(response => response.text())
+                .then(xmlText => {
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+                    const branches = xmlDoc.getElementsByTagName('branch');
+                    const branchesContainer = document.getElementById('branches-container');
+
+                    let branchesHTML = '<h3>Our Locations</h3><ul>';
+                    Array.from(branches).forEach(branch => {
+                        const address = branch.getElementsByTagName('address')[0].textContent;
+                        const contact = branch.getElementsByTagName('contact')[0].textContent;
+                        const hours = branch.getElementsByTagName('hours')[0].textContent;
+                        const mapLink = branch.getElementsByTagName('mapLink')[0].textContent;
+
+                        branchesHTML += `
+                            <li>
+                                <strong>Address:</strong> ${address}<br>
+                                <strong>Contact:</strong> ${contact}<br>
+                                <strong>Hours:</strong> ${hours}<br>
+                                <a href="${mapLink}" target="_blank">View on Google Maps</a>
+                            </li>
+                        `;
+                    });
+                    branchesHTML += '</ul>';
+
+                    branchesContainer.innerHTML = branchesHTML;
+                })
+                .catch(error => console.error('Error loading XML:', error));
+        }
+
+        // Load branches when the page loads
+        window.onload = loadBranches;
+    </script>
+</body>
+</html>
