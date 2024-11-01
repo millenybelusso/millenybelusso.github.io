@@ -21,12 +21,15 @@
     <section>
         <h2>Our Menu</h2>
         <div id="menu-container">
-            <!-- JavaScript will insert menu items here -->
+            
         </div>
     </section>
-    <footer>
-        <p>&copy; 2024 Bryan’s Café</p>
-    </footer>
+   
+<footer>
+    <p>&copy; 2024 Bryan’s Café</p>
+    <a href="privacy-policy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+</footer>
+
 
     <script>
         function loadMenu() {
@@ -37,7 +40,7 @@
                     const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
                     const menuContainer = document.getElementById('menu-container');
 
-                    // Generate Meals
+                    
                     let mealsHTML = '<h3>Meals</h3><div class="menu-section">';
                     Array.from(xmlDoc.querySelectorAll('meals > item')).forEach(item => {
                         const name = item.querySelector('name').textContent;
@@ -55,8 +58,8 @@
                     });
                     mealsHTML += '</div>';
 
-                    // Generate Beverages
-                    let beveragesHTML = '<h3>Beverages</h3><div class="menu-section">';
+                    
+                    let beveragesHTML = '<h3>Beverages</h3> <h4>Coffee and Hot Chocolate</h4> <p>For coffee, please inform the staff of the coffee type.</p><div class="menu-section">';
                     Array.from(xmlDoc.querySelectorAll('beverages > item:not(:nth-child(n+4))')).forEach(item => {
                         const name = item.querySelector('name').textContent;
                         const price = item.querySelector('price').textContent;
@@ -73,7 +76,7 @@
                     });
                     beveragesHTML += '</div>';
 
-                    // Generate Other Beverages
+                    
                     let otherBeveragesHTML = '<h3>Other Beverages</h3><div class="menu-section">';
                     Array.from(xmlDoc.querySelectorAll('beverages > item:nth-child(n+4)')).forEach(item => {
                         const name = item.querySelector('name').textContent;
@@ -91,7 +94,7 @@
                     });
                     otherBeveragesHTML += '</div>';
 
-                    // Append sections to container
+                    
                     menuContainer.innerHTML = mealsHTML + beveragesHTML + otherBeveragesHTML;
                 })
                 .catch(error => console.error('Error loading XML:', error));

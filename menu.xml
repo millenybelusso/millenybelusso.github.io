@@ -30,21 +30,21 @@
    </meals>
    <beverages>
        <item>
-           <name>Small Coffee</name>
+           <name>Small</name>
            <price>$3.50</price>
-           <description>For coffee, please inform the staff of the coffee type</description>
+           <description>Coffee and Hot Chocolate</description>
            <image>small_coffee.jpg</image>
        </item>
        <item>
-           <name>Regular Coffee</name>
+           <name>Regular</name>
            <price>$4.00</price>
-           <description>For coffee, please inform the staff of the coffee type</description>
+           <description>Coffee and Hot Chocolate</description>
            <image>regular_coffee.jpg</image>
        </item>
        <item>
-           <name>Large Coffee</name>
+           <name>Large</name>
            <price>$4.50</price>
-           <description>For coffee, please inform the staff of the coffee type</description>
+           <description>Coffee and Hot Chocolate</description>
            <image>large_coffee.jpg</image>
        </item>
        <item>
